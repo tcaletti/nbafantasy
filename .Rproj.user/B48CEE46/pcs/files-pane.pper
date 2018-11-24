@@ -1,0 +1,9 @@
+{
+    "path" : "~/Documents/NBA/nbafantasy",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
