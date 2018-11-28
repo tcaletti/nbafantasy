@@ -8,9 +8,9 @@
 #' @export
 player_past_games = function(player){
 
-  games = game_logs(result_types = 'team')
+  games = suppressWarnings(suppressMessages(game_logs(result_types = 'team')))
 
-  playerGames = game_logs() %>%
+  playerGames = suppressWarnings(suppressMessages(game_logs())) %>%
     filter(namePlayer == player) %>%
     mutate(dk = dkPoints(pts, treb, ast, stl, blk, fg3m, tov))
 
