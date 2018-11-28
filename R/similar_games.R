@@ -11,7 +11,7 @@ similar_games = function(player, team) {
 
   games = suppressWarnings(suppressMessages(player_past_games(player)))
 
-  opponent = current_team_clusters() %>%
+  opponent = suppressWarnings(suppressMessages(current_team_clusters())) %>%
     filter(opp == team)
 
   teamCluster = opponent$cluster
