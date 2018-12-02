@@ -13,5 +13,6 @@ RoxygenNote: 6.1.1
 Depends:
   dplyr,
   nbastatR,
-  clue
+  clue,
+  rvest
 

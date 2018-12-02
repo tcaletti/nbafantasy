@@ -6,7 +6,7 @@
 #' @param player String of player name
 #' @return Dataframe of all player games
 #' @export
-player_past_games = function(player){
+player_past_games = function(player, extra = FALSE){
 
   games = suppressWarnings(suppressMessages(game_logs(result_types = 'team')))
 
@@ -33,10 +33,15 @@ player_past_games = function(player){
     as.vector()
 
   fppg = playerGames$dk
+  home = playerGames$locationGame
+  b2b = playerGames$isB2BSecond
+
 
   pl = playerOpp %>%
     cbind(cluster) %>%
-    cbind(fppg)
+    cbind(fppg) %>%
+    cbind(home) %>%
+    cbind(b2b)
 
   seasonAvg = c(NA)
   lastTen = c(NA)
@@ -61,7 +66,13 @@ player_past_games = function(player){
     cbind(seasonAvg) %>%
     cbind(lastTen) %>%
     arrange(-gameNum) %>%
-    select(team, gameNum, fppg, seasonAvg, lastTen, cluster, pace, dEff, rebs, oppEFG, opp3r, oppTov)
+    select(team, gameNum, fppg, seasonAvg, lastTen, cluster,home, b2b, pace, dEff, rebs, oppEFG, opp3r, oppTov)
 
-  return(results)
+  if(extra){
+    return(results)
+  } else {
+    results = results %>%
+      select(team, gameNum, fppg, lastTen, cluster, home, b2b, seasonAvg)
+    return(results)
+  }
 }
