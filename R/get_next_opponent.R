@@ -6,37 +6,6 @@
 #' @return Dataframe of every teams next game
 get_next_opponent = function() {
   
-  team_abbreviations = c('Boston Celtics' = 'BOS', 
-                         'Golden State Warriors' = 'GSW',
-                         'Charlotte Hornets' = 'CHA',
-                         'Detroit Pistons' = 'DET',
-                         'Indiana Pacers' = 'IND',
-                         'Orlando Magic'= 'ORL',
-                         'New York Knicks' = 'NYK',
-                         'Toronto Raptors' = 'TOR',
-                         'Houston Rockets' = 'HOU',
-                         'San Antonio Spurs' = 'SAS',
-                         'Sacramento Kings' = 'SAC',
-                         'LA Clippers' = 'LAC',
-                         'Phoenix Suns' = 'PHX',
-                         'Philadelphia 76ers' = 'PHI',
-                         'Washington Wizards' = 'WAS',
-                         'Portland Trail Blazers' = 'POR',
-                         'Brooklyn Nets' = 'BKN',
-                         'Memphis Grizzlies' = 'MEM',
-                         'Minnesota Timberwolves' = 'MIN',
-                         'New Orleans Pelicans' = 'NOP',
-                         'Milwaukee Bucks' = 'MIL',
-                         'Utah Jazz' = 'UTA',
-                         'Miami Heat' = 'MIA',
-                         'Chicago Bulls' = 'CHI',
-                         'Dallas Mavericks' = 'DAL',
-                         'Denver Nuggets'= 'DEN',
-                         'Los Angeles Lakers' = 'LAL',
-                         'Cleveland Cavaliers' = 'CLE',
-                         'Oklahoma City Thunder' = 'OKC',
-                         'Atlanta Hawks' = 'ATL')
-  
   url = 'https://fixturedownload.com/results/nba-2018'
   x_path = '/html/body/div[2]/div/table'
   
@@ -82,9 +51,19 @@ get_next_opponent = function() {
     }
   }
   
+  teamAbrv = c()
+  oppAbrv = c()
+  
+  for(i in 1:30){
+
+    teamAbrv = c(teamAbrv, team_abbreviations(next_game[i,1]))
+    oppAbrv = c(oppAbrv, team_abbreviations(next_game[i,2]))
+
+  }
+
   next_game = next_game %>%
-    mutate(teamAbr = unname(team_abbreviations[team]),
-           oppAbr = unname(team_abbreviations[opponent]))
+  cbind(teamAbrv) %>%
+  cbind(oppAbrv)
   
   return(next_game)
 }

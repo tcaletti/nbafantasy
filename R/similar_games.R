@@ -9,7 +9,7 @@
 #' @export
 similar_games = function(player, team) {
 
-  games = suppressWarnings(suppressMessages(player_past_games(player)))
+  games = suppressWarnings(suppressMessages(player_past_games(player, extra=T)))
 
   opponent = suppressWarnings(suppressMessages(current_team_clusters())) %>%
     filter(opp == team)
