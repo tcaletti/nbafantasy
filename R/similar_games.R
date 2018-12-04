@@ -19,7 +19,7 @@ similar_games = function(player, team) {
   similar = games %>%
     filter(cluster == teamCluster) %>%
     head(5) %>%
-    select(opponent, gameNum, fppg, seasonAvg, lastTen, pace, dEff, rebs, oppEFG, opp3r, oppTov, cluster)
+    select(opponent, gameNum, home, b2b, fppg, seasonAvg, lastTen, pace, dEff, rebs, oppEFG, opp3r, oppTov, cluster)
 
   if(nrow(similar) == 0) {
     return('No similar games this season')
