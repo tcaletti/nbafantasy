@@ -104,6 +104,9 @@ get_next_opponent = function() {
   cbind(teamAbrv) %>%
   cbind(oppAbrv)
 
+  isFactor = sapply(next_game, is.factor)
+  next_game[isFactor] = lapply(next_game[isFactor], as.character)
+
   return(next_game)
 }
 
