@@ -12,7 +12,6 @@ compare_tiers = function(players){
   num = length(players)
   outputList = vector(mode = 'list', length = 0)
   
-  
   next_game = get_next_opponent()
   
   games = suppressMessages(suppressWarnings(game_logs()))
@@ -24,7 +23,8 @@ compare_tiers = function(players){
                          cluster = c(),
                          similar_games = c(),
                          similar_average = c(),
-                         lastTenAvg = c())
+                         improvement = c(),
+                         lastTen = c())
   
   current_clusters = suppressWarnings(suppressMessages(current_team_clusters()))
   
@@ -57,7 +57,11 @@ compare_tiers = function(players){
     simAvg = ifelse(is.data.frame(sim), mean(sim$fppg), NA)
     simGames = ifelse(is.data.frame(sim), nrow(sim), 0)
     simPast = ifelse(is.data.frame(sim), mean(sim$lastTen), NA)
-      
+    
+    past_games = player_past_games(i)
+    player_last_game = max(past_games$gameNum)
+    pgs = past_games %>%
+      filter(gameNum >= player_last_game - 10)
     
     df = data.frame(player = i,
                     opponent = next_opponent,
@@ -66,7 +70,8 @@ compare_tiers = function(players){
                     cluster = oppCluster$cluster,
                     similar_games = simGames,
                     similar_average = simAvg,
-                    lastTenAvg = simPast)
+                    improvement = simAvg-simPast,
+                    lastTen = round(mean(pgs$fppg)), 2)
     
     aggregate = aggregate %>%
       rbind(df)
