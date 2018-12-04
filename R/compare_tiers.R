@@ -10,7 +10,7 @@
 compare_tiers = function(players){
   
   num = length(players)
-  outputList = vector(mode = 'list', length = num)
+  outputList = vector(mode = 'list', length = 0)
   
   
   next_game = get_next_opponent()
