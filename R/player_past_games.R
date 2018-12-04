@@ -14,7 +14,7 @@ player_past_games = function(player, extra = FALSE){
     filter(namePlayer == player) %>%
     mutate(dk = dkPoints(pts, treb, ast, stl, blk, fg3m, tov))
 
-  playerTeam = unique(playerGames$slugTeam)
+  playerTeam = playerGames$slugTeam
 
   playerOpp = data.frame()
 
@@ -67,9 +67,9 @@ player_past_games = function(player, extra = FALSE){
   results = pl %>%
     cbind(seasonAvg) %>%
     cbind(lastTen) %>%
+    cbind(playerTeam) %>%
     arrange(-gameNum) %>%
     mutate(opponent = team,
-           playerTeam = playerTeam,
            player = player) %>%
     select(playerTeam, player, opponent, gameNum, fppg, seasonAvg, lastTen, cluster,home, b2b, pace, dEff, rebs, oppEFG, opp3r, oppTov)
 
